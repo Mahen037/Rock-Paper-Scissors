@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function getComputerChoice() {
+            const options = ["rock", "paper", "scissors"];
+            return options[Math.floor(Math.random() * 3)];
+        }
+
+        function getHumanChoice() {
+            let sign = prompt('What\'s your sign? Choose from "rock", "paper", "scissors"', "rock");
+            let lower_sign = sign.toLowerCase();
+            const options = ["rock", "paper", "scissors"];
+            if (options.includes(lower_sign)) {
+                return sign;
+            } else {
+                throw `Incorrect choice: ${sign}`
+            }
+        }
+
+        function playGame() {
+            let humanScore = 0;
+            let computerScore = 0;
+
+            function playRound(humanChoice, computerChoice) {
+                if (humanChoice === computerChoice) {
+                    console.log(`It's a tie! Both chose ${humanChoice}`);
+                    return;
+                }
+                const winningCombos = {
+                    rock: "paper",
+                    scissors: "rock",
+                    paper: "scissors",
+                };
+                if (humanChoice === winningCombos[computerChoice]) {
+                    humanScore += 1;
+                    console.log(`You Win! ${humanChoice} beats ${computerChoice}`);
+                } else {
+                    computerScore += 1;
+                    console.log(`You lose! ${computerChoice} beats ${humanChoice}`)
+                }
+            }
+
+            for (let i = 0; i < 5; i++) {
+                const humanSelection = getHumanChoice();
+                const computerSelection = getComputerChoice();
+                playRound(humanSelection, computerSelection);
+            }
+            let message;
+            if (humanScore > computerScore) {
+                message = `You Win! Your score: ${humanScore} Computer Score: ${computerScore}`;
+            } else if (humanScore < computerScore) {
+                message = `You Loose! Your score: ${humanScore} Computer Score: ${computerScore}`;
+            } else {
+                message = `Game tie with a score of ${humanScore} each`;
+            }
+            console.log(message);
+        }
+
+        playGame();
+
+    </script>
+</body>
+</html>
